@@ -7,7 +7,7 @@
     <div id="app">
       <h2>{{ title }}</h2>
       <ul>
-        <li v-for="country in countries">{{ country.name.common }}</li>
+        <li v-for="country in sortedCountries">{{ country.name.common }}</li>
       </ul>
     </div>
     <script>
@@ -23,6 +23,13 @@
               .get("https://restcountries.com/v3.1/all")
               .then((response) => (this.countries = response.data))
               .catch((error) => console.error(error));
+          },
+        },
+        computed: {
+          sortedCountries: function () {
+            return this.countries.sort((c1, c2) =>
+              c1.name.common.localeCompare(c2.name.common)
+            );
           },
         },
         mounted() {
