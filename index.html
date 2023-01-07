@@ -1,5 +1,9 @@
 <html>
   <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
     <script src="vue.js"></script>
     <script src="axios.min.js"></script>
   </head>
@@ -7,42 +11,25 @@
     <div id="app">
       <h2>{{ title }}</h2>
       <input type="text" v-model="filter" />
-      <ul>
-        <li v-for="country in filteredCountries">{{ country.name.common }}</li>
-      </ul>
+      <table class="table">
+        <theader>
+          <tr>
+            <th>Name</th>
+            <th>Languages</th>
+          </tr>
+        </theader>
+        <tbody>
+          <tr v-for="country in filteredCountries">
+            <td>{{ country.name.common }}</td>
+            <td>
+              <ul>
+                <li v-for="language in country.languages">{{ language }}</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <script>
-      new Vue({
-        el: "#app",
-        data: {
-          title: "World Explorer",
-          countries: [],
-          filter: "",
-        },
-        methods: {
-          fetchCountries: function () {
-            axios
-              .get("https://restcountries.com/v3.1/all")
-              .then((response) => (this.countries = response.data))
-              .catch((error) => console.error(error));
-          },
-        },
-        computed: {
-          sortedCountries: function () {
-            return this.countries.sort((c1, c2) =>
-              c1.name.common.localeCompare(c2.name.common)
-            );
-          },
-          filteredCountries: function () {
-            return this.sortedCountries.filter((c) =>
-              c.name.common.toLowerCase().includes(this.filter.toLowerCase())
-            );
-          },
-        },
-        mounted() {
-          this.fetchCountries();
-        },
-      });
-    </script>
+    <script src="app.js"></script>
   </body>
 </html>
