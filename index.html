@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <script src="vue.js"></script>
+    <script src="axios.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h2>{{ title }}</h2>
+      <ul>
+        <li v-for="country in countries">{{ country.name.common }}</li>
+      </ul>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          title: "World Explorer",
+          countries: [],
+        },
+        methods: {
+          fetchCountries: function () {
+            axios
+              .get("https://restcountries.com/v3.1/all")
+              .then((response) => (this.countries = response.data))
+              .catch((error) => console.error(error));
+          },
+        },
+        mounted() {
+          this.fetchCountries();
+        },
+      });
+    </script>
+  </body>
+</html>
