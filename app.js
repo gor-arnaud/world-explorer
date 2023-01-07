@@ -4,6 +4,7 @@ new Vue({
         title: "World Explorer",
         countries: [],
         filter: "",
+        flag: ""
     },
     methods: {
         fetchCountries: function () {
@@ -24,6 +25,9 @@ new Vue({
                 c.name.common.toLowerCase().includes(this.filter.toLowerCase())
             );
         },
+        isFlag: function () {
+            return this.flag !== "";
+        }
     },
     mounted() {
         this.fetchCountries();

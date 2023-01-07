@@ -19,8 +19,15 @@
           </tr>
         </theader>
         <tbody>
-          <tr v-for="country in filteredCountries">
-            <td>{{ country.name.common }}</td>
+          <tr v-for="country in filteredCountries" v-bind:key="country.fifa">
+            <td>
+              <button
+                class="button is-ghost"
+                v-on:click="flag = country.flags.png"
+              >
+                {{ country.name.common }}
+              </button>
+            </td>
             <td>
               <ul>
                 <li v-for="language in country.languages">{{ language }}</li>
@@ -29,6 +36,19 @@
           </tr>
         </tbody>
       </table>
+      <div class="modal" :class="{ 'is-active': isFlag}">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <p class="image is-4by3">
+            <img :src="flag" alt="" />
+          </p>
+        </div>
+        <button
+          class="modal-close is-large"
+          aria-label="close"
+          @click="flag = ''"
+        ></button>
+      </div>
     </div>
     <script src="app.js"></script>
   </body>
