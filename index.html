@@ -6,8 +6,9 @@
   <body>
     <div id="app">
       <h2>{{ title }}</h2>
+      <input type="text" v-model="filter" />
       <ul>
-        <li v-for="country in sortedCountries">{{ country.name.common }}</li>
+        <li v-for="country in filteredCountries">{{ country.name.common }}</li>
       </ul>
     </div>
     <script>
@@ -16,6 +17,7 @@
         data: {
           title: "World Explorer",
           countries: [],
+          filter: "",
         },
         methods: {
           fetchCountries: function () {
@@ -29,6 +31,11 @@
           sortedCountries: function () {
             return this.countries.sort((c1, c2) =>
               c1.name.common.localeCompare(c2.name.common)
+            );
+          },
+          filteredCountries: function () {
+            return this.sortedCountries.filter((c) =>
+              c.name.common.toLowerCase().includes(this.filter.toLowerCase())
             );
           },
         },
